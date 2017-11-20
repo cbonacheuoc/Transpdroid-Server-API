@@ -22,4 +22,4 @@ Route::middleware('auth:api')->get('/shipping/id/{id}/data', 'ApiController@getS
 Route::middleware('auth:api')->get('/shipping/code/{code}/data', 'ApiController@getShippingDataByCode');
 Route::middleware('auth:api')->get('/shipping/id/{id}/destiny', 'ApiController@getShippingDestinyById');
 
-Route::middleware('auth:api')->post('/shipping/sign', 'ApiController@signShipping');
+Route::middleware('auth:api')->post('/shipping/setShippingStates', 'ApiController@setShippingStates');

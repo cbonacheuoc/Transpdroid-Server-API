@@ -59,16 +59,29 @@ class ApiController extends Controller {
     }
 
     /**
-     * Sign Shipping
+     * Set Shipping States
      *
      * @return Response
      */
-    public function signShipping(Request $request) {
+    public function setShippingStates(Request $request) {
         $shipping = Shipping::find($request->id);
+        $states = Shipping::find($request->states);
         if ($shipping) {
-            $shipping->states = 3;
-            $shipping->save();
-            return response()->json(['message' => "Shipping Signed"], 200);
+            if (is_numeric($states)) {
+                $shipping->states = $states;
+                $shipping->save();
+                
+                //Historic
+                $shippingStatesHistory = new ShippingStatesHistory();
+                $shippingStatesHistory->shipping_id = $shipping->id;
+                $shippingStatesHistory->state_id = $request->states;
+
+                $shippingStatesHistory->save();
+                
+                return response()->json(['message' => "Shipping States Changed"], 200);
+            } else {
+                return response()->json(['message' => "States not is a number"], 502);
+            }
         } else {
             return response()->json(['message' => "Shipping not found"], 404);
         }
