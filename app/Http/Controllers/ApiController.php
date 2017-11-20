@@ -68,14 +68,14 @@ class ApiController extends Controller {
         $states = Shipping::find($request->states);
         if ($shipping) {
             $statesArray = array(3, 4, 5);
-            if (in_array($states, $statesArray)) {
+            if (in_array($request->states, $statesArray)) {
                 $shipping->states = $states;
                 $shipping->save();
                 
                 //Historic
                 $shippingStatesHistory = new ShippingStatesHistory();
                 $shippingStatesHistory->shipping_id = $shipping->id;
-                $shippingStatesHistory->state_id = $request->states;
+                $shippingStatesHistory->state_id = $shipping->states->id;
 
                 $shippingStatesHistory->save();
                 
