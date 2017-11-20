@@ -67,7 +67,9 @@ class ApiController extends Controller {
         $shipping = Shipping::find($request->id);
         $states = Shipping::find($request->states);
         if ($shipping) {
-            if (is_numeric($states)) {
+            $statesArray = array("3", "4", "5");
+            if (in_array($states, $statesArray)) {
+//            if (is_numeric($states)) {
                 $shipping->states = $states;
                 $shipping->save();
                 
