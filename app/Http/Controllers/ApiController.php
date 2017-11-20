@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Shipping;
+use App\ShippingStatesHistory;
 
 class ApiController extends Controller {
 
