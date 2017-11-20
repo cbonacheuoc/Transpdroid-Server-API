@@ -67,9 +67,8 @@ class ApiController extends Controller {
         $shipping = Shipping::find($request->id);
         $states = Shipping::find($request->states);
         if ($shipping) {
-            $statesArray = array("3", "4", "5");
+            $statesArray = array(3, 4, 5);
             if (in_array($states, $statesArray)) {
-//            if (is_numeric($states)) {
                 $shipping->states = $states;
                 $shipping->save();
                 
@@ -82,7 +81,7 @@ class ApiController extends Controller {
                 
                 return response()->json(['message' => "Shipping States Changed"], 200);
             } else {
-                return response()->json(['message' => "States not is a number"], 502);
+                return response()->json(['message' => "States incorrect"], 502);
             }
         } else {
             return response()->json(['message' => "Shipping not found"], 404);
