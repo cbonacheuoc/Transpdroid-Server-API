@@ -111,7 +111,7 @@ class ApiController extends Controller {
         $response = [
             'id' => $shipping->id,
             'code' => $shipping->code,
-            'states' => $shipping->states,
+            'states' => (int)$shipping->states,
             'contact_person' => $shipping->contact_person,
             'email' => $shipping->email,
             'number' => $shipping->number,
