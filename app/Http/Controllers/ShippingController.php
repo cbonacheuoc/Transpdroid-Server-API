@@ -61,13 +61,13 @@ class ShippingController extends Controller {
      * @return Response
      */
     public function store(Request $request) {
-        
-        if($request->fragile == "on"){
+
+        if ($request->fragile == "on") {
             $fragile = 1;
         } else {
             $fragile = 0;
         }
-        
+
         // Paquet
         $shipping = new Shipping();
         $shipping->code = $request->code;
@@ -79,20 +79,20 @@ class ShippingController extends Controller {
         $shipping->city = $request->city;
         $shipping->state = $request->state;
         $shipping->country = $request->country;
-        
+
         $shipping->number = $request->number;
         $shipping->weight = $request->weight;
         $shipping->size = $request->size;
         $shipping->fragile = $fragile;
         $shipping->states = $request->states;
-        
+
         $shipping->save();
-        
+
         //Historic
         $shippingStatesHistory = new ShippingStatesHistory();
         $shippingStatesHistory->shipping_id = $shipping->id;
         $shippingStatesHistory->state_id = $request->states;
-        
+
         $shippingStatesHistory->save();
 
         return redirect()->action('ShippingController@edit', ['id' => $shipping->id]);
@@ -116,7 +116,7 @@ class ShippingController extends Controller {
      */
     public function edit($id) {
         $shipping = Shipping::find($id);
-        
+
         $states = States::pluck('name', 'id');
         $users = User::pluck('name', 'id');
 
@@ -147,7 +147,7 @@ class ShippingController extends Controller {
         $shipping->city = $request->city;
         $shipping->state = $request->state;
         $shipping->country = $request->country;
-        
+
 //        $shipping->delivery_date = $request->delivery_date;
         $shipping->number = $request->number;
         $shipping->weight = $request->weight;
@@ -157,13 +157,16 @@ class ShippingController extends Controller {
         $shipping->user_id = $request->user_id;
 
         $shipping->save();
-        
+
         //Historic
         $shippingStatesHistory = new ShippingStatesHistory();
         $shippingStatesHistory->shipping_id = $shipping->id;
         $shippingStatesHistory->state_id = $request->states;
-        
+
         $shippingStatesHistory->save();
+        
+        //Send mail
+        $this->sendShippingMail($id);
 
         return redirect()->action('ShippingController@index');
     }
@@ -177,4 +180,17 @@ class ShippingController extends Controller {
     public function destroy($id) {
         //
     }
+
+    private function sendShippingMail($id) {
+
+        $data = ['link' => 'http://styde.net'];
+
+        \Mail::send('emails.notificacionSend', $data, function ($message) {
+//            $message->from('email@styde.net', 'Styde.Net');
+            $message->to('user@example.com')->subject('Notificación 1');
+        });
+
+        return "Se envío el email";
+    }
+
 }
