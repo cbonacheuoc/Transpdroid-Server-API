@@ -186,7 +186,6 @@ class ShippingController extends Controller {
         $data = ['link' => 'http://styde.net'];
 
         \Mail::send('emails.notificationSend', $data, function ($message) {
-//            $message->from('email@styde.net', 'Styde.Net');
             $message->to('user@example.com')->subject('Notificación 1');
         });
 
