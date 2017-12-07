@@ -85,6 +85,7 @@ class ShippingController extends Controller {
         $shipping->size = $request->size;
         $shipping->fragile = $fragile;
         $shipping->states = $request->states;
+	$sihpping->delivery_date = $request->delivery_date;
 
         $shipping->save();
 
@@ -148,7 +149,7 @@ class ShippingController extends Controller {
         $shipping->state = $request->state;
         $shipping->country = $request->country;
 
-//        $shipping->delivery_date = $request->delivery_date;
+        $shipping->delivery_date = $request->delivery_date;
         $shipping->number = $request->number;
         $shipping->weight = $request->weight;
         $shipping->size = $request->size;
@@ -164,9 +165,9 @@ class ShippingController extends Controller {
         $shippingStatesHistory->state_id = $request->states;
 
         $shippingStatesHistory->save();
-        
+
         //Send mail
-        $this->sendShippingMail($id);
+        $this->sendShippingMail($shipping);
 
         return redirect()->action('ShippingController@index');
     }
@@ -181,12 +182,40 @@ class ShippingController extends Controller {
         //
     }
 
-    private function sendShippingMail($id) {
+    private function sendShippingMail($shipping) {
 
-        $data = ['link' => 'http://styde.net'];
+	$stringState = "";
 
-        \Mail::send('emails.notificationSend', $data, function ($message) {
-            $message->to('user@example.com')->subject('Notificación 1');
+	switch ($shipping->states) {
+	    case 1:
+        	$stringState = "En la oficina Central";
+	        break;
+	    case 2:
+	        $stringState = "En transit";
+	        break;
+	    case 3:
+	        $stringState = "Entregat";
+	        break;
+	    case 4:
+	        $stringState = "Usuari no trobat";
+	        break;
+	    case 5:
+	        $stringState = "Direcció erronea";
+	        break;
+	}
+
+
+        $data = [
+		'date' => $shipping->delivery_date,
+		'code' => $shipping->code,
+		'number' => $shipping->number,
+		'weight' => $shipping->weight,
+		'state' => $stringState,
+		'email' => $shipping->email,
+		];
+
+        \Mail::send('emails.notificationSend', $data, function ($message) use ($data) {
+            $message->to($data["email"])->subject("Nou estat de l'enviament: " . $data["code"]);
         });
 
         return "Se envío el email";

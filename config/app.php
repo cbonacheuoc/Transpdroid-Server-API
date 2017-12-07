@@ -187,6 +187,8 @@ return [
         Yajra\Datatables\DatatablesServiceProvider::class,
         // Form Service Provider
         Collective\Html\HtmlServiceProvider::class,
+	// QR Generate
+	SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
     ],
 
@@ -243,6 +245,7 @@ return [
          */
         'Html'      => Collective\Html\HtmlFacade::class,
         'Form'      => Collective\Html\FormFacade::class,
+	'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];

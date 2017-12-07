@@ -18,7 +18,7 @@
                 <div class="form-group ">
                     {!! Form::label('states', ucfirst(Lang::get('app.states'))) !!}
                     <span class="required">*</span>
-                    @if ($edit) 
+                    @if ($edit)
                         {!! Form::select('states', $states, $shipping->states, ['class' => 'form-control select2','placeholder' => ucfirst(Lang::get('app.select a states...'))]) !!}
                     @else
                         {!! Form::select('states', $states, $shipping->states, ['class' => 'form-control select2','readonly' => 'readonly','placeholder' => ucfirst(Lang::get('app.select a states...'))]) !!}
@@ -27,12 +27,17 @@
                 <div class="form-group ">
                     {!! Form::label('delivery_date', ucfirst(Lang::get('app.delivery_date'))) !!}
                     <span class="required">*</span>
-                    {!! Form::date('delivery_date', \Carbon\Carbon::now()) !!}
-                    @if ($edit) 
+		    @if ($edit)
+                        {!! Form::text('delivery_date', Carbon\Carbon::parse($shipping->delivery_date)) !!}
                     @else
+                        {!! Form::text('delivery_date', Carbon\Carbon::now()) !!}
                     @endif
                 </div>
-                
+		<div class="form-group ">
+		@if ($edit)
+                    {!! QrCode::size(100)->generate($shipping->code); !!}
+		@endif
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group ">
@@ -53,12 +58,15 @@
                         {!! Form::select('user_id', $users, $shipping->user_id, ['class' => 'form-control','readonly' => 'readonly','placeholder' => ucfirst(Lang::get('app.select a delivery man...'))]) !!}
                     @endif
                 </div>
-                <div class="form-group ">
-                    {!! Form::label('fragile', ucfirst(Lang::get('app.fragile'))) !!}
-                    <span class="required">*</span>
-                    {!! Form::checkbox('fragile', $value = $shipping->fragile , $attributes = ['class' => 'form-control']) !!}
+		<div class="form-group ">
+		    {!! Form::label('fragile', ucfirst(Lang::get('app.fragile'))) !!}
+		    <span class="required">*</span>
+		    <div class="squaredFour">
+			{!! Form::checkbox('fragile', $value = $shipping->fragile , $attributes = ['class' => 'form-control']) !!}
+		        <label for="squaredFour"></label>
+		    </div>
                 </div>
-            </div>
+	  </div>
         </div>
     </div>
 </div>
