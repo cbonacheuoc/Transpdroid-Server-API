@@ -85,7 +85,7 @@ class ShippingController extends Controller {
         $shipping->size = $request->size;
         $shipping->fragile = $fragile;
         $shipping->states = $request->states;
-	$sihpping->delivery_date = $request->delivery_date;
+	$shipping->delivery_date = $request->delivery_date;
 
         $shipping->save();
 
@@ -95,6 +95,9 @@ class ShippingController extends Controller {
         $shippingStatesHistory->state_id = $request->states;
 
         $shippingStatesHistory->save();
+
+	//Send mail
+        $this->sendShippingMail($shipping);
 
         return redirect()->action('ShippingController@edit', ['id' => $shipping->id]);
     }

@@ -14,7 +14,7 @@ class ApiController extends Controller {
      * @return Response
      */
     public function getAllShippingByUserId() {
-        
+
         $userId = request()->user()->id;
         $responseArray = array();
         $shippings = Shipping::where('user_id', $userId)->get();
@@ -28,7 +28,7 @@ class ApiController extends Controller {
             return response()->json(['message' => "Not found shipping for this user"], 404);
         }
     }
-    
+
     /**
      * Get Shipping BY id
      *
@@ -72,14 +72,17 @@ class ApiController extends Controller {
             if (in_array($states, $statesArray)) {
                 $shipping->states = $states;
                 $shipping->save();
-                
+
                 //Historic
                 $shippingStatesHistory = new ShippingStatesHistory();
                 $shippingStatesHistory->shipping_id = $shipping->id;
                 $shippingStatesHistory->state_id = $states;
 
                 $shippingStatesHistory->save();
-                
+
+		//Send mail
+	        $this->sendShippingMail($shipping);
+
                 return response()->json(['message' => "Shipping States Changed"], 200);
             } else {
                 return response()->json(['message' => "States incorrect"], 502);
@@ -88,7 +91,7 @@ class ApiController extends Controller {
             return response()->json(['message' => "Shipping not found"], 404);
         }
     }
-    
+
     /**
      * Get Shipping destiny
      *
@@ -99,7 +102,7 @@ class ApiController extends Controller {
         if ($shipping) {
             //Carrer de valencia, 359 barcelona, barcelona, 08013 españa
             $response["data"]["destination"] = $shipping->address . " " . $shipping->city . "," . $shipping->state . "," . $shipping->city . " " . $shipping->country;
-            
+
             return response()->json($response, 200);
         } else {
             return response()->json(['message' => "Shipping not found"], 404);
@@ -130,6 +133,45 @@ class ApiController extends Controller {
         ];
 
         return $response;
+    }
+
+    private function sendShippingMail($shipping) {
+
+	$stringState = "";
+
+	switch ($shipping->states) {
+	    case 1:
+        	$stringState = "En la oficina Central";
+	        break;
+	    case 2:
+	        $stringState = "En transit";
+	        break;
+	    case 3:
+	        $stringState = "Entregat";
+	        break;
+	    case 4:
+	        $stringState = "Usuari no trobat";
+	        break;
+	    case 5:
+	        $stringState = "Direcció erronea";
+	        break;
+	}
+
+
+        $data = [
+		'date' => $shipping->delivery_date,
+		'code' => $shipping->code,
+		'number' => $shipping->number,
+		'weight' => $shipping->weight,
+		'state' => $stringState,
+		'email' => $shipping->email,
+		];
+
+        \Mail::send('emails.notificationSend', $data, function ($message) use ($data) {
+            $message->to($data["email"])->subject("Nou estat de l'enviament: " . $data["code"]);
+        });
+
+        return "Se envío el email";
     }
 
 }
