@@ -8,8 +8,8 @@
             @include('states-module.forms.form', array('header'=>true, 'as'=>'stable'))
         </div>
         <div class="text-right">
+            <a class="btn btn-danger" title="{{ ucfirst(Lang::get('app.cancel')) }}" href="{{route('shippings.index')}}">{{ ucfirst(Lang::get('app.cancel')) }}</a>
             <button type="submit" class="btn btn-info">{!! ucfirst(Lang::get('app.save')) !!}</button>
-            <button type="reset" class="btn btn-default">{!! ucfirst(Lang::get('app.cancel')) !!}</button>
         </div>
     {!! Form::close() !!}
 </div>
