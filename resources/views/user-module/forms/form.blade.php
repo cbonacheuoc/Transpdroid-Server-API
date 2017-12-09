@@ -20,6 +20,11 @@
                     <span class="required">*</span>
                     {!! Form::text('name', $value = $user->name , $attributes = ['class' => 'form-control']) !!}
                 </div>
+                <div class="form-group ">
+                    {!! Form::label('type', ucfirst(Lang::get('app.type'))) !!}
+                    <span class="required">*</span>
+                    {!! Form::select('type', ['1' => 'Gestor del panell', '2' => 'Repartidor', '3' => 'Repartidor Express 24h', '4' => 'Repartidor Fast Food'], $user->type, ['class' => 'form-control select2','placeholder' => ucfirst(Lang::get('app.select a type...'))]) !!}
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group ">
@@ -36,11 +41,6 @@
                     {!! Form::label('lastname', ucfirst(Lang::get('app.lastname'))) !!}
                     <span class="required">*</span>
                     {!! Form::text('lastname', $value = $user->lastname , $attributes = ['class' => 'form-control']) !!}
-                </div>
-                <div class="form-group ">
-                    {!! Form::label('type', ucfirst(Lang::get('app.type'))) !!}
-                    <span class="required">*</span>
-                    {!! Form::select('type', ['1' => 'Gestor del panell', '2' => 'Repartidor', '3' => 'Repartidor Express 24h', '4' => 'Repartidor Fast Food'], $user->type, ['class' => 'form-control select2','placeholder' => ucfirst(Lang::get('app.select a type...'))]) !!}
                 </div>
             </div>
         </div>
