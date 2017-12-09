@@ -53,13 +53,11 @@ class UserController extends Controller {
     public function store(Request $request) {
         //
         $user = new User();
-        $user->firstname = $request->ldapUserFirstName;
-        $user->lastname = $request->ldapUserLastName;
-        $user->locale = $request->language;
-        $user->login = $request->ldapUserLogin;
-        $user->email = $request->ldapUserEmail;
-        $user->password = bcrypt($request->newUserPasswd);
-        $user->telephone = $request->telephone;
+        $user->name = $request->name;
+        $user->lastname = $request->lastname;
+        $user->type = $request->type;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
         $user->save();
 
         $roles = $request->get('roles', []);
@@ -103,7 +101,8 @@ class UserController extends Controller {
         //
         $user = User::find($id);
         $user->name = $request->name;
-        $user->email = $request->email;
+        $user->lastname = $request->lastname;
+        $user->type = $request->type;
 
         $user->save();
 
@@ -126,24 +125,24 @@ class UserController extends Controller {
     #
     ############################################################################
 
-    private function checkUserExistsByEmail($email) {
-        $return = false;
-
-        $adminByEmail = User::where('email', $email)->first();
-        if ($adminByEmail) {
-            $return = true;
-        }
-        return $return;
-    }
-
-    private function checkUserExistsByUser($user) {
-        $return = false;
-
-        $adminByName = User::where('login', $user)->first();
-        if ($adminByName) {
-            $return = true;
-        }
-        return $return;
-    }
+//    private function checkUserExistsByEmail($email) {
+//        $return = false;
+//
+//        $adminByEmail = User::where('email', $email)->first();
+//        if ($adminByEmail) {
+//            $return = true;
+//        }
+//        return $return;
+//    }
+//
+//    private function checkUserExistsByUser($user) {
+//        $return = false;
+//
+//        $adminByName = User::where('login', $user)->first();
+//        if ($adminByName) {
+//            $return = true;
+//        }
+//        return $return;
+//    }
 
 }

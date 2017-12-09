@@ -6,23 +6,36 @@
         <div class="panel-body">
             <div class="col-md-6">
                 <div class="form-group ">
-                    {!! Form::label('login', 'Login name') !!}
+                    {!! Form::label('email', ucfirst(Lang::get('app.email'))) !!}
                     <span class="required">*</span>
-                    {!! Form::text('login', $value = $user->email , $attributes = ['class' => 'form-control disabled', 'readonly' => "" ]) !!}
+                    @if ($edit)
+                        {!! Form::text('email', $value = $user->email , $attributes = ['class' => 'form-control disabled', 'readonly' => "" ]) !!}
+                    @else
+                        {!! Form::text('email', $value = $user->email , $attributes = ['class' => 'form-control' => "" ]) !!}
+                    @endif
                     <span class="help-block">{!! ucfirst(Lang::get('app.this is the name used on the login screen')) !!}</span>
                 </div>
                 <div class="form-group ">
-                    {!! Form::label('login', 'First Name') !!}
+                    {!! Form::label('name', ucfirst(Lang::get('app.name'))) !!}
                     <span class="required">*</span>
-                    {!! Form::text('firstname', $value = $user->firstname , $attributes = ['class' => 'form-control']) !!}
+                    {!! Form::text('name', $value = $user->name , $attributes = ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group ">
-                    {!! Form::label('email', ucfirst(Lang::get('app.email'))) !!}
+                    {!! Form::label('password', ucfirst(Lang::get('app.password'))) !!}
                     <span class="required">*</span>
-                    {!! Form::email('email', $value = $user->login , $attributes = ['class' => 'form-control']) !!}
-                    <span class="help-block">{!! ucfirst(Lang::get('app.please enter a valid email address')) !!}</span>
+                    @if ($edit)
+                        {!! Form::password('password', $value = $user->password , $attributes = ['class' => 'form-control disabled', 'readonly' => "" ]) !!}
+                    @else
+                        {!! Form::password('password', $value = $user->password , $attributes = ['class' => 'form-control' => "" ]) !!}
+                    @endif
+                    <span class="help-block">{!! ucfirst(Lang::get('app.this is the name used on the login screen')) !!}</span>
+                </div>
+                <div class="form-group ">
+                    {!! Form::label('type', ucfirst(Lang::get('app.type'))) !!}
+                    <span class="required">*</span>
+                    {!! Form::select('type', type, $user->type, ['class' => 'form-control select2','placeholder' => ucfirst(Lang::get('app.select a type...'))]) !!}
                 </div>
                 <div class="form-group ">
                     {!! Form::label('lastname', ucfirst(Lang::get('app.lastname'))) !!}
