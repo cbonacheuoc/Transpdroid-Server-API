@@ -23,6 +23,7 @@ return [
     
     //FORM
     'name' => 'nom',
+    'type' => 'tipus repartidor',
     'description' => 'description',
     'code' => 'codi',
     'icon' => 'icona',
@@ -39,6 +40,7 @@ return [
     'telephone' => 'telèfon',
     'this is the name used on the login screen' => 'aquest és el nom que es fa servir a la pantalla d\'inici de sessió',
     'please enter a valid email address' => 'siusplau, introdueixi una adreça de correu electrònic vàlida',
+    'select a type' => 'selecciona un tipus repartidor',
     
     'number' => 'nombre de paquets',
     'weight' => 'pes',
