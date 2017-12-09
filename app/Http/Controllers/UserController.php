@@ -41,6 +41,7 @@ class UserController extends Controller {
 
         return view('user-module/templates/add', [
             'user' => $user,
+            'edit' => 0,
             ]
         );
     }
@@ -87,6 +88,7 @@ class UserController extends Controller {
 
         return view('user-module/templates/edit', [
             'user' => $user,
+            'edit' => 1,
             ]
         );
     }
