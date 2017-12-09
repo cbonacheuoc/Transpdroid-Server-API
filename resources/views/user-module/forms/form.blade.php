@@ -26,9 +26,9 @@
                     {!! Form::label('password', ucfirst(Lang::get('app.password'))) !!}
                     <span class="required">*</span>
                     @if ($edit)
-                        {!! Form::password('password', $value = $user->password , $attributes = ['class' => 'form-control disabled', 'readonly' => "" ]) !!}
+                        {!! Form::password('password', $attributes = ['class' => 'form-control disabled', 'readonly' => "" ]) !!}
                     @else
-                        {!! Form::password('password', $value = $user->password , $attributes = ['class' => 'form-control' ]) !!}
+                        {!! Form::password('password', $attributes = ['class' => 'form-control' ]) !!}
                     @endif
                     <span class="help-block">{!! ucfirst(Lang::get('app.this is the name used on the login screen')) !!}</span>
                 </div>
