@@ -4,12 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Http\Requests;
 use App\DataTables\UsersDataTable;
-use File;
-use Intervention\Image\ImageManagerStatic as Image;
-use Auth;
-use Route;
 
 class UserController extends Controller {
 
@@ -60,9 +55,6 @@ class UserController extends Controller {
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
-
-        $roles = $request->get('roles', []);
-        $user->attachRoles($roles);
 
         return redirect()->action('UserController@edit', ['id' => $user->id]);
     }
@@ -120,31 +112,5 @@ class UserController extends Controller {
     public function destroy($id) {
         //
     }
-
-    ############################################################################
-    #
-    # Others Functions
-    #
-    ############################################################################
-
-//    private function checkUserExistsByEmail($email) {
-//        $return = false;
-//
-//        $adminByEmail = User::where('email', $email)->first();
-//        if ($adminByEmail) {
-//            $return = true;
-//        }
-//        return $return;
-//    }
-//
-//    private function checkUserExistsByUser($user) {
-//        $return = false;
-//
-//        $adminByName = User::where('login', $user)->first();
-//        if ($adminByName) {
-//            $return = true;
-//        }
-//        return $return;
-//    }
 
 }
