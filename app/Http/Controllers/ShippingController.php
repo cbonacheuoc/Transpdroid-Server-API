@@ -122,7 +122,7 @@ class ShippingController extends Controller {
         $shipping = Shipping::find($id);
 
         $states = States::pluck('name', 'id');
-        $users = User::pluck('name', 'id');
+        $users = User::where('type', ">", 1)->pluck('name', 'id');
 
         return view('shipping-module/templates/edit', [
             'shipping' => $shipping,
