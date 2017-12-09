@@ -11,7 +11,7 @@
                     @if ($edit)
                         {!! Form::text('email', $value = $user->email , $attributes = ['class' => 'form-control disabled', 'readonly' => "" ]) !!}
                     @else
-                        {!! Form::text('email', $value = $user->email , $attributes = ['class' => 'form-control' => "" ]) !!}
+                        {!! Form::text('email', $value = $user->email , $attributes = ['class' => 'form-control' ]) !!}
                     @endif
                     <span class="help-block">{!! ucfirst(Lang::get('app.this is the name used on the login screen')) !!}</span>
                 </div>
@@ -28,7 +28,7 @@
                     @if ($edit)
                         {!! Form::password('password', $value = $user->password , $attributes = ['class' => 'form-control disabled', 'readonly' => "" ]) !!}
                     @else
-                        {!! Form::password('password', $value = $user->password , $attributes = ['class' => 'form-control' => "" ]) !!}
+                        {!! Form::password('password', $value = $user->password , $attributes = ['class' => 'form-control' ]) !!}
                     @endif
                     <span class="help-block">{!! ucfirst(Lang::get('app.this is the name used on the login screen')) !!}</span>
                 </div>
