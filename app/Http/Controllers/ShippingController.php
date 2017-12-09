@@ -44,7 +44,7 @@ class ShippingController extends Controller {
         $shipping = new Shipping();
         $shipping->states = 1;
         $states = States::pluck('name', 'id');
-        $users = User::pluck('name', 'id');
+        $users = User::where('type', ">", 1)->pluck('name', 'id');
 
         return view('shipping-module/templates/add', [
             'shipping' => $shipping,
