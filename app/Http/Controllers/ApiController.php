@@ -38,7 +38,7 @@ class ApiController extends Controller {
         $shipping = Shipping::find($id);
         if ($shipping) {
             
-            if(app()->request()->user()->id == $shipping->user_id){
+            if(Auth::user()->id == $shipping->user_id){
                 $response["data"] = $this->responseShipping($shipping);
                 return response()->json($response, 200);
             } else {
