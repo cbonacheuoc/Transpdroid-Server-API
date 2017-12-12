@@ -37,8 +37,13 @@ class ApiController extends Controller {
     public function getShippingDataById($id) {
         $shipping = Shipping::find($id);
         if ($shipping) {
-            $response["data"] = $this->responseShipping($shipping);
-            return response()->json($response, 200);
+            
+            if(app()->request()->user()->id == $shipping->user_id){
+                $response["data"] = $this->responseShipping($shipping);
+                return response()->json($response, 200);
+            } else {
+                return response()->json(['message' => "Not found shipping for this user"], 404);
+            }
         } else {
             return response()->json(['message' => "Shipping not found"], 404);
         }
