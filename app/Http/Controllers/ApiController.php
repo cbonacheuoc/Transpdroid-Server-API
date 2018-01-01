@@ -18,7 +18,7 @@ class ApiController extends Controller {
 
         $userId = Auth::user()->id;
         $responseArray = array();
-        $shippings = Shipping::where('user_id', $userId)->get();
+        $shippings = Shipping::where('user_id', $userId)->orderBy('states', 'desc')->get();
         if ($shippings) {
             foreach ($shippings as $shipping) {
                 $responseArray[] = $this->responseShipping($shipping);
