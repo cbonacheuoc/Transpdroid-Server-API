@@ -47,3 +47,10 @@ cp .env.example .env
 ```
 
 To finish Restart Apache Server
+
+
+
+Llicència
+-------
+    Aquesta obra està subjecta a:
+    Llicència de Reconeixement-NoComercial-SenseObraDerivada 3.0 Espanya de Creative Commons
