@@ -60,5 +60,6 @@ return [
     'locate shipping' => 'localitzar l\'enviament',
     'enter your shipping code' => 'introduïu el vostre codi d\'enviament',
     'check the detailed states of your shipment by entering your shipping code.' => 'comproveu l\'estat detallat del vostre enviament introduint el vostre codi d\'enviament.',
-
+    'delivery_date' => 'data d\'entrega',
+    'fragile' => 'fràgil',
 ];
